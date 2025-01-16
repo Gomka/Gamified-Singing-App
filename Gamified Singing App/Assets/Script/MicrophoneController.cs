@@ -18,7 +18,7 @@ public class MicrophoneController : MonoBehaviour
         {
             // Algorithm detected fundamental frequency.
             // The frequency is stored in the variable `frequency` (in Hz).
-            Debug.Log(frequency);
+            Debug.Log("freq: " +frequency);
         }
     }
 
@@ -32,7 +32,7 @@ public class MicrophoneController : MonoBehaviour
     void Start()
     {
         AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.clip = Microphone.Start("Built-in Microphone", true, 1, 44100);
+        audioSource.clip = Microphone.Start("", true, 1, 44100);
         audioSource.Play();
 
         // It is recommended to estimate at appropriate time intervals.
