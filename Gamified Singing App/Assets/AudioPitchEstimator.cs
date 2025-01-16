@@ -8,7 +8,7 @@ using UnityEngine;
 public class AudioPitchEstimator : MonoBehaviour
 {
     [Tooltip("Lowest frequency that can estimate [Hz]")]
-    [Range(90, 150)]
+    [Range(40, 150)]
     public int frequencyMin = 40;
 
     [Tooltip("Highest frequency that can estimate [Hz]")]
