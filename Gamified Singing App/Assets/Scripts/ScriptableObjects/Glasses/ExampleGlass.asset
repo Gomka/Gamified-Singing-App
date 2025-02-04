@@ -15,4 +15,4 @@ MonoBehaviour:
   frequencyBreak: 100
   toughness: 1
   sound: {fileID: 0}
-  sprite: {fileID: -637479842, guid: e75151e2921b2b641a59c1498af2b191, type: 3}
+  sprite: {fileID: 21300000, guid: d634a87868aa5da4db1b4f28022d7f75, type: 3}

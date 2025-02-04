@@ -8,7 +8,8 @@ public class VoiceChallengeController : MonoBehaviour
     public void Start()
     {
         // Start the scene
-        // Initialize the array of Glasses
+        // Initialize the current exercise (quizas diferentes execises viven en diferentes scenes, con su arte y mood)
+
         // Feed the 1st glass to the player so they can sing
         NextGlass();
     }

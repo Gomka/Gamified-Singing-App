@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b9c7de6d320fb46b043689b4860a7d, type: 3}
   m_Name: ExampleExercise
   m_EditorClassIdentifier: 
+  exerciseName: Example Exercise
   glasses:
   - {fileID: 11400000, guid: bbfdc3ea6c580d940a1b5ab67d930371, type: 2}
   - {fileID: 11400000, guid: bbfdc3ea6c580d940a1b5ab67d930371, type: 2}
