@@ -7,7 +7,6 @@ public class VoiceChallengeController : MonoBehaviour
     [SerializeField] private Transform spawnPosition, endPosition;
     private Glass currentGlass;
     public float movementDuration = 20.0f;
-    private TweenCallback movementDone;
 
     public void Start()
     {
@@ -27,7 +26,8 @@ public class VoiceChallengeController : MonoBehaviour
         if (currentGlass == null)
         {
             Debug.Log("Sacabao");
-            // WIN ~ SceneManager.LoadScene(0); 
+            // WIN ~ SceneManager.LoadScene(0);
+            return;
         }
 
         // Make glass appear 
@@ -38,7 +38,7 @@ public class VoiceChallengeController : MonoBehaviour
 
         // Move the glass
         newGlass.transform.position = spawnPosition.position;
-        newGlass.transform.DOMove(endPosition.position, movementDuration); // .onComplete(movementDone);
+        newGlass.transform.DOMove(endPosition.position, movementDuration).OnComplete(() => GlassDone(newGlass));
     }
 
     public void GlassDone(GameObject go)
