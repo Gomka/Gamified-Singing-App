@@ -5,7 +5,7 @@ public class Exercise : ScriptableObject
 {
     public string exerciseName;
     public Glass[] glasses;
-    public int index = 0;
+    private int index = 0;
 
     public Glass NextGlass()
     {

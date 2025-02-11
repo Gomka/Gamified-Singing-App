@@ -1,8 +1,10 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class VoiceChallengeController : MonoBehaviour
 {
     [SerializeField] private Exercise exercise;
+    [SerializeField] private Transform spawnPosition;
     private Glass currentGlass;
 
     public void Start()
@@ -24,8 +26,17 @@ public class VoiceChallengeController : MonoBehaviour
             // WIN ~ SceneManager.LoadScene(0); 
         }
 
-        // Make glass appear
+        // Make glass appear 
         // Play glass sound as reference
         // Clear up any previous data needed
+
+        GameObject newGlass = new GameObject();
+
+        newGlass.AddComponent<Rigidbody>();
+        newGlass.AddComponent<SpriteRenderer>().sprite = currentGlass.sprite;
+        newGlass.transform.position = spawnPosition.position;
+
     }
+
+
 }
