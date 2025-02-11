@@ -38,10 +38,16 @@ public class VoiceChallengeController : MonoBehaviour
 
         // Move the glass
         newGlass.transform.position = spawnPosition.position;
-        newGlass.transform.DOMove(endPosition.position, movementDuration).OnComplete(() => GlassDone(newGlass));
+        newGlass.transform.DOMove(endPosition.position, movementDuration).SetEase(Ease.Linear).OnComplete(() => GlassEnd(newGlass));
+
+        // TODO make linear glass movement (?)
+        // TODO end animation
+        // TODO scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch
+        // TODO BIG ONE: make pitch interact with glass
+        // Y mil cosas mas que saldrán, pero eso pa luego
     }
 
-    public void GlassDone(GameObject go)
+    public void GlassEnd(GameObject go)
     {
         Debug.Log("reached the end");
         GameObject.Destroy(go);
