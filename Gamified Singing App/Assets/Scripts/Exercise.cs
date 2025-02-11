@@ -5,15 +5,20 @@ public class Exercise : ScriptableObject
 {
     public string exerciseName;
     public Glass[] glasses;
-    private int index = 0;
+    public int index = 0;
 
     public Glass NextGlass()
     {
-        if(index >= glasses.Length)
+        if (index >= glasses.Length)
         {
             return null;
         }
 
         return glasses[index++];
+    }
+
+    public void Reset()
+    {
+        index = 0;
     }
 }

@@ -4,8 +4,10 @@ using DG.Tweening;
 public class VoiceChallengeController : MonoBehaviour
 {
     [SerializeField] private Exercise exercise;
-    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private Transform spawnPosition, endPosition;
     private Glass currentGlass;
+    public float movementDuration = 20.0f;
+    private TweenCallback movementDone;
 
     public void Start()
     {
@@ -13,7 +15,8 @@ public class VoiceChallengeController : MonoBehaviour
         // Initialize the current exercise (quizas diferentes execises viven en diferentes scenes, con su arte y mood)
 
         // Feed the 1st glass to the player so they can sing
-        NextGlass();
+        exercise.Reset();
+        //NextGlass();
     }
 
     public void NextGlass()
@@ -23,20 +26,24 @@ public class VoiceChallengeController : MonoBehaviour
         // If no more Glasses, win!
         if (currentGlass == null)
         {
+            Debug.Log("Sacabao");
             // WIN ~ SceneManager.LoadScene(0); 
         }
 
         // Make glass appear 
-        // Play glass sound as reference
-        // Clear up any previous data needed
-
+        // TODO prettier animation
         GameObject newGlass = new GameObject();
 
-        newGlass.AddComponent<Rigidbody>();
         newGlass.AddComponent<SpriteRenderer>().sprite = currentGlass.sprite;
-        newGlass.transform.position = spawnPosition.position;
 
+        // Move the glass
+        newGlass.transform.position = spawnPosition.position;
+        newGlass.transform.DOMove(endPosition.position, movementDuration); // .onComplete(movementDone);
     }
 
-
+    public void GlassDone(GameObject go)
+    {
+        Debug.Log("reached the end");
+        GameObject.Destroy(go);
+    }
 }
