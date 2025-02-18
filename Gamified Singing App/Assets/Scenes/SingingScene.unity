@@ -1002,7 +1002,7 @@ GameObject:
   - component: {fileID: 876462336}
   - component: {fileID: 876462335}
   m_Layer: 5
-  m_Name: VerticalLayoutGroup
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6562,7 +6562,7 @@ RectTransform:
   m_GameObject: {fileID: 1483417512}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90.00027}
-  m_LocalScale: {x: 0.008639999, y: 0.008639999, z: 0.008639999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1581064926}
@@ -6589,7 +6589,7 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: -1
+  m_FlexibleWidth: 0.8
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &1504568601
@@ -6904,7 +6904,7 @@ RectTransform:
   m_GameObject: {fileID: 1671196045}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 1, y: 0.008547009, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1369328980}
@@ -7096,7 +7096,7 @@ RectTransform:
   m_GameObject: {fileID: 1825977471}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90.00027}
-  m_LocalScale: {x: 0.008639999, y: 0.008639999, z: 0.008639999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1581064926}
@@ -7123,7 +7123,7 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: 0.8
+  m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &1996736227
@@ -7252,7 +7252,7 @@ RectTransform:
   m_GameObject: {fileID: 2051796670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9719.999}
-  m_LocalScale: {x: 108, y: 108, z: 108}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1291345686}

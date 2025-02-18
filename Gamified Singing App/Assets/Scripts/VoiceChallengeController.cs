@@ -36,7 +36,6 @@ public class VoiceChallengeController : MonoBehaviour
         // Make glass appear 
         // TODO prettier animation
 
-
         GameObject newGlass = new GameObject();
         newGlass.AddComponent<SpriteRenderer>().sprite = currentGlass.sprite;
 
@@ -51,7 +50,7 @@ public class VoiceChallengeController : MonoBehaviour
         // TODO BIG ONE: make pitch interact with glass
         // Y mil cosas mas que saldrán, pero eso pa luego
 
-        newGlass.AddComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
+        //newGlass.AddComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
     }
 
     public void GlassEnd(GameObject go)
