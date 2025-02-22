@@ -88,7 +88,13 @@ public class VoiceChallengeController : MonoBehaviour
         // estimate the fundamental frequency
         var frequency = estimator.Estimate(audioSource);
 
-        Debug.Log(frequency.ToString());
+        if (!float.IsNaN(frequency))
+        {
+            Debug.Log(frequency.ToString());
+            Debug.Log("Note: " + GetNameFromFrequency(frequency));
+        }
+
+
 
         // visualize SRH score
         var srh = estimator.SRH;
