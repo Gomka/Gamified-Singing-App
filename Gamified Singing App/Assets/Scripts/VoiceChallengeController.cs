@@ -13,7 +13,16 @@ public class VoiceChallengeController : MonoBehaviour
     //[SerializeField] GameObject prefabGlass;
     //[SerializeField] RectTransform parentPanel;
 
+    #region Pitch Visualizer
+    public AudioSource audioSource;
     public AudioPitchEstimator estimator;
+    public LineRenderer lineSRH;
+    public LineRenderer lineFrequency;
+    public Transform marker;
+    public TextMesh textFrequency;
+    public TextMesh textMin;
+    public TextMesh textMax;
+    #endregion
 
     public int estimateRate = 30;
 
@@ -78,6 +87,8 @@ public class VoiceChallengeController : MonoBehaviour
     {
         // estimate the fundamental frequency
         var frequency = estimator.Estimate(audioSource);
+
+        Debug.Log(frequency.ToString());
 
         // visualize SRH score
         var srh = estimator.SRH;
