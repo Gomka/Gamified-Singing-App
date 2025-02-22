@@ -5894,6 +5894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 889199078}
   duration: 1
+  microphoneMixer: {fileID: -4198005218430368383, guid: e7abcf5beb247824fbca90d5348b50ca, type: 2}
 --- !u!1 &1123326783
 GameObject:
   m_ObjectHideFlags: 0
