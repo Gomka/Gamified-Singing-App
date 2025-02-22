@@ -88,15 +88,8 @@ public class VoiceChallengeController : MonoBehaviour
         // estimate the fundamental frequency
         var frequency = estimator.Estimate(audioSource);
 
-        if (!float.IsNaN(frequency))
-        {
-            Debug.Log(frequency.ToString());
-            Debug.Log("Note: " + GetNameFromFrequency(frequency));
-        }
-
-
-
         // visualize SRH score
+        /*
         var srh = estimator.SRH;
         var numPoints = srh.Count;
         var positions = new Vector3[numPoints];
@@ -108,6 +101,7 @@ public class VoiceChallengeController : MonoBehaviour
         }
         lineSRH.positionCount = numPoints;
         lineSRH.SetPositions(positions);
+        */
 
         // visualize fundamental frequency
         if (float.IsNaN(frequency))
@@ -122,9 +116,16 @@ public class VoiceChallengeController : MonoBehaviour
             var position = (frequency - min) / (max - min) - 0.5f;
 
             // indicate the frequency with LineRenderer
+            var cam = Camera.main;
+            var freqToHeight = Map(frequency, estimator.frequencyMin, estimator.frequencyMax, 0, cam.scaledPixelHeight);
+            var worldStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
+            var worldEnd = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane)); 
+
             lineFrequency.positionCount = 2;
-            lineFrequency.SetPosition(0, new Vector3(position, +1, 0));
-            lineFrequency.SetPosition(1, new Vector3(position, -1, 0));
+            lineFrequency.SetPosition(0, worldStart);
+            lineFrequency.SetPosition(1, worldEnd);
+            //lineFrequency.SetPosition(0, new Vector3(0, position, 0));
+            //lineFrequency.SetPosition(1, new Vector3(1, position, 0));
 
             // indicate the latest frequency with TextMesh
             marker.position = new Vector3(position, 0, 0);
@@ -136,6 +137,10 @@ public class VoiceChallengeController : MonoBehaviour
         textMax.text = string.Format("{0} Hz", estimator.frequencyMax);
     }
 
+    public static float Map(float value, float A, float B, float C, float D)
+    {
+        return C + (value - A) * (D - C) / (B - A);
+    }
 
     // frequency -> pitch name
     string GetNameFromFrequency(float frequency)
