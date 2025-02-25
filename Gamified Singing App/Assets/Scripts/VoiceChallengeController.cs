@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.Audio;
 using UnityEngine.Timeline;
+using TMPro;
 
 public class VoiceChallengeController : MonoBehaviour
 {
@@ -16,13 +17,11 @@ public class VoiceChallengeController : MonoBehaviour
     #region Pitch Visualizer
     public AudioSource audioSource;
     public AudioPitchEstimator estimator;
-    public LineRenderer lineSRH;
     public LineRenderer lineFrequency;
-    public Transform marker;
-    public TextMesh textFrequency;
-    public TextMesh textMin;
-    public TextMesh textMax;
+    public TMP_Text textFrequency;
     #endregion
+
+    private float frequency;
 
     public int estimateRate = 30;
 
@@ -86,24 +85,8 @@ public class VoiceChallengeController : MonoBehaviour
     void UpdateVisualizer()
     {
         // estimate the fundamental frequency
-        var frequency = estimator.Estimate(audioSource);
+        frequency = estimator.Estimate(audioSource);
 
-        // visualize SRH score
-        /*
-        var srh = estimator.SRH;
-        var numPoints = srh.Count;
-        var positions = new Vector3[numPoints];
-        for (int i = 0; i < numPoints; i++)
-        {
-            var position = (float)i / numPoints - 0.5f;
-            var value = srh[i] * 0.005f;
-            positions[i].Set(position, value, 0);
-        }
-        lineSRH.positionCount = numPoints;
-        lineSRH.SetPositions(positions);
-        */
-
-        // visualize fundamental frequency
         if (float.IsNaN(frequency))
         {
             // hide the line when it does not exist
@@ -111,30 +94,20 @@ public class VoiceChallengeController : MonoBehaviour
         }
         else
         {
-            var min = estimator.frequencyMin;
-            var max = estimator.frequencyMax;
-            var position = (frequency - min) / (max - min) - 0.5f;
+            Debug.Log(frequency);
 
             // indicate the frequency with LineRenderer
             var cam = Camera.main;
-            var freqToHeight = Map(frequency, estimator.frequencyMin, estimator.frequencyMax, 0, cam.scaledPixelHeight);
+            var freqToHeight = Map(frequency, estimator.frequencyMin, estimator.frequencyMax, cam.scaledPixelHeight/6, cam.scaledPixelHeight-(cam.scaledPixelHeight/6));
             var worldStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
             var worldEnd = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane)); 
 
             lineFrequency.positionCount = 2;
             lineFrequency.SetPosition(0, worldStart);
-            lineFrequency.SetPosition(1, worldEnd);
-            //lineFrequency.SetPosition(0, new Vector3(0, position, 0));
-            //lineFrequency.SetPosition(1, new Vector3(1, position, 0));
+            lineFrequency.SetPosition(1, worldEnd); // TODO Lerp/DOTween the positions for smoother line
 
-            // indicate the latest frequency with TextMesh
-            marker.position = new Vector3(position, 0, 0);
-            textFrequency.text = string.Format("{0}\n{1:0.0} Hz", GetNameFromFrequency(frequency), frequency);
+            textFrequency.text = "Frequency:\r\n" + frequency + " HZ\r\n" + GetNameFromFrequency(frequency);
         }
-
-        // visualize lowest/highest frequency
-        textMin.text = string.Format("{0} Hz", estimator.frequencyMin);
-        textMax.text = string.Format("{0} Hz", estimator.frequencyMax);
     }
 
     public static float Map(float value, float A, float B, float C, float D)
