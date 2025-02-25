@@ -21,7 +21,7 @@ public class VoiceChallengeController : MonoBehaviour
     public TMP_Text textFrequency;
     #endregion
 
-    private float frequency;
+    private float frequency = 1;
 
     public int estimateRate = 30;
 
@@ -85,16 +85,17 @@ public class VoiceChallengeController : MonoBehaviour
     void UpdateVisualizer()
     {
         // estimate the fundamental frequency
-        frequency = estimator.Estimate(audioSource);
+        
+        var newFrequency = estimator.Estimate(audioSource);
 
-        if (float.IsNaN(frequency))
+        if (float.IsNaN(newFrequency))
         {
             // hide the line when it does not exist
             lineFrequency.positionCount = 0;
         }
         else
         {
-            Debug.Log(frequency);
+            DOTween.To(() => frequency, x => frequency = x, newFrequency, 0.5f); // Smooth frequency change
 
             // indicate the frequency with LineRenderer
             var cam = Camera.main;
@@ -106,6 +107,7 @@ public class VoiceChallengeController : MonoBehaviour
             lineFrequency.SetPosition(0, worldStart);
             lineFrequency.SetPosition(1, worldEnd); // TODO Lerp/DOTween the positions for smoother line
 
+            // Display frequency and name of note
             textFrequency.text = "Frequency:\r\n" + frequency + " HZ\r\n" + GetNameFromFrequency(frequency);
         }
     }
