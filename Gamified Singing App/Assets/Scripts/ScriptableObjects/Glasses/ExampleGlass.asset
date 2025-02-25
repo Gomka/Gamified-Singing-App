@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ExampleGlass
   m_EditorClassIdentifier: 
   frequencyBreak: 100
+  maxToughness: 1
   toughness: 1
   sound: {fileID: 0}
   sprite: {fileID: 21300000, guid: d634a87868aa5da4db1b4f28022d7f75, type: 3}

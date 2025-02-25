@@ -10,7 +10,7 @@ public class VoiceChallengeController : MonoBehaviour
     [SerializeField] private Exercise exercise;
     [SerializeField] private Transform spawnPosition, middlePosition, endPosition;
     private Glass currentGlass;
-    public float movementDuration = 20.0f;
+    public float movementDuration = 20.0f, score = 0;
     //[SerializeField] GameObject prefabGlass;
     //[SerializeField] RectTransform parentPanel;
 
@@ -38,6 +38,11 @@ public class VoiceChallengeController : MonoBehaviour
         InvokeRepeating(nameof(UpdateVisualizer), 0, 1.0f / estimateRate);
     }
 
+    public void FixedUpdate()
+    {
+        // Compute score & glass dmg
+    }
+
     public void NextGlass()
     {
         currentGlass = exercise.NextGlass();
@@ -45,10 +50,12 @@ public class VoiceChallengeController : MonoBehaviour
         // If no more Glasses, win!
         if (currentGlass == null)  // AND all present glasses are won
         {
-            Debug.Log("Sacabao");
+            Debug.Log("End");
             // WIN ~ SceneManager.LoadScene(0);
             return;
         }
+
+        Debug.Log(currentGlass.frequencyBreak);
 
         // Make glass appear 
         // TODO prettier animation
@@ -117,9 +124,9 @@ public class VoiceChallengeController : MonoBehaviour
         return C + (value - A) * (D - C) / (B - A);
     }
 
-    // frequency -> pitch name
     string GetNameFromFrequency(float frequency)
     {
+        // frequency -> pitch name
         var noteNumber = Mathf.RoundToInt(12 * Mathf.Log(frequency / 440) / Mathf.Log(2) + 69);
         string[] names = {
             "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"

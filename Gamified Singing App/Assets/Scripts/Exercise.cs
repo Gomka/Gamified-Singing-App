@@ -20,5 +20,9 @@ public class Exercise : ScriptableObject
     public void Reset()
     {
         index = 0;
+        foreach (var glass in glasses)
+        {
+            glass.toughness = glass.maxToughness;
+        }
     }
 }
