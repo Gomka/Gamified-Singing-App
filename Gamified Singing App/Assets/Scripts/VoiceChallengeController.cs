@@ -23,8 +23,6 @@ public class VoiceChallengeController : MonoBehaviour
 
     private float frequency = 1;
 
-    public float newFrequency = 1;
-
     public int estimateRate = 30;
 
     public void Start()
@@ -43,6 +41,13 @@ public class VoiceChallengeController : MonoBehaviour
     public void FixedUpdate()
     {
         // Compute score & glass dmg
+        // 1hz range = perfect score
+        // 5hz range = very high score
+        // 15hz range = high score
+        // 30hz range = medium score
+        // 60hz range = low score
+
+
     }
 
     public void NextGlass()
@@ -103,8 +108,7 @@ public class VoiceChallengeController : MonoBehaviour
     void UpdateVisualizer()
     {
         // estimate the fundamental frequency
-        
-        //var newFrequency = estimator.Estimate(audioSource);
+        var newFrequency = estimator.Estimate(audioSource);
 
         if (float.IsNaN(newFrequency))
         {
