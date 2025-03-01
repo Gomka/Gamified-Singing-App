@@ -6122,7 +6122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082875137ec38004989b195564d36f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequencyMin: 55
+  frequencyMin: 50
   frequencyMax: 1000
   harmonicsToUse: 5
   smoothingWidth: 450

@@ -74,8 +74,13 @@ public class VoiceChallengeController : MonoBehaviour
 
         // TODO end animation
         // TODO scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch.
-        var cam = Camera.main;
-        var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, cam.scaledPixelHeight / 6, cam.scaledPixelHeight - (cam.scaledPixelHeight / 6));
+
+        // 100
+        // Range - 50 - 1000
+        // Screen height 0 - 1080
+        // Freq edges (1/6 & 5/6) - 180 - 720
+
+        var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, 0, 720);
         newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
         // TODO BIG ONE: make pitch interact with glass
         // Y mil cosas mas que saldrán, pero eso pa luego
