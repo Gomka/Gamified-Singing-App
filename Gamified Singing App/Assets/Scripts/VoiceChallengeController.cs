@@ -11,8 +11,8 @@ public class VoiceChallengeController : MonoBehaviour
     [SerializeField] private Transform spawnPosition, middlePosition, endPosition;
     private Glass currentGlass;
     public float movementDuration = 20.0f, score = 0;
-    //[SerializeField] GameObject prefabGlass;
-    //[SerializeField] RectTransform parentPanel;
+    [SerializeField] GameObject prefabGlass;
+    [SerializeField] RectTransform parentPanel;
 
     #region Pitch Visualizer
     public AudioSource audioSource;
@@ -22,6 +22,8 @@ public class VoiceChallengeController : MonoBehaviour
     #endregion
 
     private float frequency = 1;
+
+    public float newFrequency = 1;
 
     public int estimateRate = 30;
 
@@ -60,8 +62,9 @@ public class VoiceChallengeController : MonoBehaviour
         // Make glass appear 
         // TODO prettier animation
 
-        GameObject newGlass = new GameObject();
-        newGlass.AddComponent<SpriteRenderer>().sprite = currentGlass.sprite;
+
+        GameObject newGlass = Instantiate(prefabGlass, parentPanel);
+        newGlass.GetComponent<Image>().sprite = currentGlass.sprite;
 
         // Move the glass
         newGlass.transform.position = spawnPosition.position;
@@ -70,11 +73,14 @@ public class VoiceChallengeController : MonoBehaviour
         newGlass.transform.DOMove(middlePosition.position, movementDuration / 5); // Go to middle
 
         // TODO end animation
-        // TODO scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch. Unlikely due to aspect ratios.
+        // TODO scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch.
+        var cam = Camera.main;
+        var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, cam.scaledPixelHeight / 6, cam.scaledPixelHeight - (cam.scaledPixelHeight / 6));
+        newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
         // TODO BIG ONE: make pitch interact with glass
         // Y mil cosas mas que saldrán, pero eso pa luego
 
-        //newGlass.AddComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
+        newGlass.GetComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
     }
 
     public void GlassEnd(GameObject go)
@@ -93,7 +99,7 @@ public class VoiceChallengeController : MonoBehaviour
     {
         // estimate the fundamental frequency
         
-        var newFrequency = estimator.Estimate(audioSource);
+        //var newFrequency = estimator.Estimate(audioSource);
 
         if (float.IsNaN(newFrequency))
         {
@@ -121,6 +127,7 @@ public class VoiceChallengeController : MonoBehaviour
 
     public static float Map(float value, float A, float B, float C, float D)
     {
+        // Converts float value from range A-B to range C-D
         return C + (value - A) * (D - C) / (B - A);
     }
 
