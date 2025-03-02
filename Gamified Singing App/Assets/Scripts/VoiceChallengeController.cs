@@ -13,6 +13,7 @@ public class VoiceChallengeController : MonoBehaviour
     public float movementDuration = 20.0f, score = 0;
     [SerializeField] GameObject prefabGlass;
     [SerializeField] RectTransform parentPanel;
+    [SerializeField] TMP_Text textScore;
 
     #region Pitch Visualizer
     public AudioSource audioSource;
@@ -22,6 +23,9 @@ public class VoiceChallengeController : MonoBehaviour
     #endregion
 
     private float frequency = 1;
+
+    // for testing purposes
+    public float newFrequency = 50;
 
     public int estimateRate = 30;
 
@@ -41,13 +45,17 @@ public class VoiceChallengeController : MonoBehaviour
     public void FixedUpdate()
     {
         // Compute score & glass dmg
+
         // 1hz range = perfect score
         // 5hz range = very high score
         // 15hz range = high score
         // 30hz range = medium score
-        // 60hz range = low score
-
-
+        // 50hz range = low score
+        
+        if(currentGlass != null)
+        {
+            ComputeGlassScore();
+        }
     }
 
     public void NextGlass()
@@ -105,10 +113,48 @@ public class VoiceChallengeController : MonoBehaviour
         //Play(glassSound);
     }
 
+    public void ComputeGlassScore()
+    {
+        float voicePrecision = currentGlass.frequencyBreak - frequency;
+        //voicePrecision = 1/voicePrecision;
+
+        Debug.Log(voicePrecision);
+
+        score += voicePrecision;
+        textScore.text = "Score\r\n" + score;
+
+        /*
+        switch (voicePrecision)
+        {
+            case < 2:
+                score += 15;
+                currentGlass.toughness -= 0.02f;
+                break;
+            case < 6:
+                score += 8;
+                currentGlass.toughness -= 0.02f;
+                break;
+            case < 16:
+                score += 4;
+                currentGlass.toughness -= 0.02f;
+                break;
+            case < 31:
+                score += 2;
+                currentGlass.toughness -= 0.02f;
+                break;
+            case < 51:
+                score += 1;
+                currentGlass.toughness -= 0.02f;
+                break;
+            default: break;
+        }
+        */
+    }
+
     void UpdateVisualizer()
     {
         // estimate the fundamental frequency
-        var newFrequency = estimator.Estimate(audioSource);
+        // var newFrequency = estimator.Estimate(audioSource);
 
         if (float.IsNaN(newFrequency))
         {
