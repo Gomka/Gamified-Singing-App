@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Scriptable Objects/PlayerConfig")]
 public class PlayerConfig : ScriptableObject
 {
-    public float minSingingFreq = 300, maxSingingFreq = 300;
+    public float minSingingFreq = 150, maxSingingFreq = 600;
     public Exercise selectedExercise;
     public int selectedCosmetic;
 

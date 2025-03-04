@@ -26,18 +26,16 @@ public class VoiceChallengeController : MonoBehaviour
     private float frequency = 1;
 
     // for testing purposes
-    public float newFrequency = 50;
+    //public float newFrequency = 50;
 
     public int estimateRate = 30;
 
     public void Start()
     {
-        // Start the scene
-        // Initialize the current exercise (quizas diferentes execises viven en diferentes scenes, con su arte y mood)
+        // Initialize the current data & exercise
+        LoadPlayerConfig();
 
         // Feed the 1st glass to the player so they can sing
-        LoadPlayerConfig();
-        exercise.Reset();
         Invoke("NextGlass", 1.0f);
 
         // call at slow intervals (Update() is generally too fast)
@@ -49,10 +47,9 @@ public class VoiceChallengeController : MonoBehaviour
         // Compute score & glass dmg
 
         // 1hz range = perfect score
-        // 5hz range = very high score
-        // 15hz range = high score
-        // 30hz range = medium score
-        // 50hz range = low score
+        // 5hz range = medium score
+        // 15hz range = min score
+        // 30hz range = no score
         
         if(currentGlass != null)
         {
@@ -66,6 +63,7 @@ public class VoiceChallengeController : MonoBehaviour
         estimator.frequencyMin = (int) playerConfig.minSingingFreq;
         estimator.frequencyMax = (int) playerConfig.maxSingingFreq;
         exercise = playerConfig.selectedExercise;
+        exercise.Reset();
     }
 
     public void NextGlass()
@@ -96,12 +94,15 @@ public class VoiceChallengeController : MonoBehaviour
         newGlass.transform.DOMove(middlePosition.position, movementDuration / 5); // Go to middle
 
         // TODO end animation
-        // TODO scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch.
+
+        // scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch.
 
         // 100
         // Range - 50 - 1000
         // Screen height 0 - 1080
         // Freq edges (1/6 & 5/6) - 180 - 720
+
+        // TODO cull glasses that are outside of the player's vocal range
 
         var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, 0, 720);
         newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
@@ -125,10 +126,10 @@ public class VoiceChallengeController : MonoBehaviour
 
     public void ComputeGlassScore()
     {
-        float voicePrecision = currentGlass.frequencyBreak - frequency;
+        float voicePrecision = Mathf.Abs(currentGlass.frequencyBreak - frequency);
         //voicePrecision = 1/voicePrecision;
 
-        Debug.Log(voicePrecision);
+        //Debug.Log(voicePrecision);
 
         score += voicePrecision;
         textScore.text = "Score\r\n" + score;
@@ -164,7 +165,7 @@ public class VoiceChallengeController : MonoBehaviour
     void UpdateVisualizer()
     {
         // estimate the fundamental frequency
-        // var newFrequency = estimator.Estimate(audioSource);
+        var newFrequency = estimator.Estimate(audioSource);
 
         if (float.IsNaN(newFrequency))
         {
@@ -173,7 +174,7 @@ public class VoiceChallengeController : MonoBehaviour
         }
         else
         {
-            DOTween.To(() => frequency, x => frequency = x, newFrequency, 0.5f); // Smooth frequency change
+            DOTween.To(() => frequency, x => frequency = x, newFrequency, 0.5f); // Smooth frequency visualization
 
             // indicate the frequency with LineRenderer
             var cam = Camera.main;
@@ -198,7 +199,7 @@ public class VoiceChallengeController : MonoBehaviour
 
     string GetNameFromFrequency(float frequency)
     {
-        if(!float.IsNaN(newFrequency))
+        if(!float.IsNaN(frequency))
         {
             // frequency -> pitch name
             var noteNumber = Mathf.RoundToInt(12 * Mathf.Log(frequency / 440) / Mathf.Log(2) + 69);

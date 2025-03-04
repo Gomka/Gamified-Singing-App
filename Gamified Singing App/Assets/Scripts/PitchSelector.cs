@@ -4,7 +4,7 @@ using TMPro;
 public class PitchSelector : MonoBehaviour
 {
     public PlayerConfig playerConfig;
-    public float minFreq = 300, maxFreq = 400, estimateRate = 30;
+    public float minFreq = 150, maxFreq = 600, estimateRate = 30;
     public AudioSource audioSource;
     public AudioPitchEstimator estimator;
     [SerializeField] TMP_Text textMinFreq, textMaxFreq;
@@ -41,10 +41,10 @@ public class PitchSelector : MonoBehaviour
 
     public void Reset()
     {
-        minFreq = 300;
+        minFreq = 150;
         playerConfig.minSingingFreq = minFreq;
         textMinFreq.text = "Min Freq.\r\n" + minFreq + "HZ";
-        maxFreq = 400;
+        maxFreq = 600;
         playerConfig.maxSingingFreq = maxFreq;
         textMaxFreq.text = "Max Freq.\r\n" + maxFreq + "HZ";
     }
