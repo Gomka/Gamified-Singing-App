@@ -10,6 +10,7 @@ public class VoiceChallengeController : MonoBehaviour
     [SerializeField] private Exercise exercise;
     [SerializeField] private Transform spawnPosition, middlePosition, endPosition;
     private Glass currentGlass;
+    private GameObject newGlass;
     public float movementDuration = 20.0f, score = 0;
     [SerializeField] GameObject prefabGlass;
     [SerializeField] RectTransform parentPanel;
@@ -44,14 +45,9 @@ public class VoiceChallengeController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        // Compute score & glass dmg
+        // Compute score & glass dmg as long as there's a glass + the user is singing
 
-        // 1hz range = perfect score
-        // 5hz range = medium score
-        // 15hz range = min score
-        // 30hz range = no score
-        
-        if(currentGlass != null)
+        if(currentGlass != null && lineFrequency.positionCount > 0)
         {
             ComputeGlassScore();
         }
@@ -84,7 +80,7 @@ public class VoiceChallengeController : MonoBehaviour
         // TODO prettier animation
 
 
-        GameObject newGlass = Instantiate(prefabGlass, parentPanel);
+        newGlass = Instantiate(prefabGlass, parentPanel);
         newGlass.GetComponent<Image>().sprite = currentGlass.sprite;
 
         // Move the glass
@@ -112,9 +108,9 @@ public class VoiceChallengeController : MonoBehaviour
         newGlass.GetComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
     }
 
-    public void GlassEnd(GameObject go)
+    public void GlassEnd()
     {
-        GameObject.Destroy(go);
+        GameObject.Destroy(newGlass);
         NextGlass();
     }
 
@@ -127,39 +123,37 @@ public class VoiceChallengeController : MonoBehaviour
     public void ComputeGlassScore()
     {
         float voicePrecision = Mathf.Abs(currentGlass.frequencyBreak - frequency);
-        //voicePrecision = 1/voicePrecision;
 
-        //Debug.Log(voicePrecision);
+        // 1hz range = perfect score
+        // 5hz range = medium score
+        // 15hz range = min score
+        // 30hz range = no score
 
-        score += voicePrecision;
-        textScore.text = "Score\r\n" + score;
-
-        /*
-        switch (voicePrecision)
+        if (voicePrecision < 30)
         {
-            case < 2:
-                score += 15;
-                currentGlass.toughness -= 0.02f;
-                break;
-            case < 6:
-                score += 8;
-                currentGlass.toughness -= 0.02f;
-                break;
-            case < 16:
-                score += 4;
-                currentGlass.toughness -= 0.02f;
-                break;
-            case < 31:
+            currentGlass.toughness -= 0.02f;
+            score += 1;
+
+            if(voicePrecision < 15)
+            {
                 score += 2;
-                currentGlass.toughness -= 0.02f;
-                break;
-            case < 51:
-                score += 1;
-                currentGlass.toughness -= 0.02f;
-                break;
-            default: break;
+                if(voicePrecision < 5)
+                {
+                    score += 3;
+                    if(voicePrecision <1)
+                    {
+                        score += 4;
+                    }
+                }
+            }
+
+            if (currentGlass.toughness <= 0)
+            {
+                score += 100; // 100 score per broken glass
+                GlassEnd();
+            }
+            textScore.text = "Score\r\n" + score;
         }
-        */
     }
 
     void UpdateVisualizer()
