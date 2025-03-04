@@ -6056,6 +6056,7 @@ MonoBehaviour:
   prefabGlass: {fileID: 6613776915855897305, guid: 2a7a0114c1c958340b5b659bbf5324e8, type: 3}
   parentPanel: {fileID: 1369328980}
   textScore: {fileID: 49824486}
+  playerConfig: {fileID: 11400000, guid: 3fc49b50305fd274ba46146960b0215e, type: 2}
   audioSource: {fileID: 1311438253}
   estimator: {fileID: 1311438252}
   lineFrequency: {fileID: 50494097}

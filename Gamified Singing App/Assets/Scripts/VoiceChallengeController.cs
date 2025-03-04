@@ -14,6 +14,7 @@ public class VoiceChallengeController : MonoBehaviour
     [SerializeField] GameObject prefabGlass;
     [SerializeField] RectTransform parentPanel;
     [SerializeField] TMP_Text textScore;
+    [SerializeField] PlayerConfig playerConfig;
 
     #region Pitch Visualizer
     public AudioSource audioSource;
@@ -35,6 +36,7 @@ public class VoiceChallengeController : MonoBehaviour
         // Initialize the current exercise (quizas diferentes execises viven en diferentes scenes, con su arte y mood)
 
         // Feed the 1st glass to the player so they can sing
+        LoadPlayerConfig();
         exercise.Reset();
         Invoke("NextGlass", 1.0f);
 
@@ -56,6 +58,14 @@ public class VoiceChallengeController : MonoBehaviour
         {
             ComputeGlassScore();
         }
+    }
+
+    public void LoadPlayerConfig()
+    {
+        // Load the user's frequency range and selected exercise
+        estimator.frequencyMin = (int) playerConfig.minSingingFreq;
+        estimator.frequencyMax = (int) playerConfig.maxSingingFreq;
+        exercise = playerConfig.selectedExercise;
     }
 
     public void NextGlass()
@@ -188,11 +198,15 @@ public class VoiceChallengeController : MonoBehaviour
 
     string GetNameFromFrequency(float frequency)
     {
-        // frequency -> pitch name
-        var noteNumber = Mathf.RoundToInt(12 * Mathf.Log(frequency / 440) / Mathf.Log(2) + 69);
-        string[] names = {
+        if(!float.IsNaN(newFrequency))
+        {
+            // frequency -> pitch name
+            var noteNumber = Mathf.RoundToInt(12 * Mathf.Log(frequency / 440) / Mathf.Log(2) + 69);
+            string[] names = {
             "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
-        };
-        return names[noteNumber % 12];
+            };
+            return names[noteNumber % 12];
+        }
+        return "";
     }
 }
