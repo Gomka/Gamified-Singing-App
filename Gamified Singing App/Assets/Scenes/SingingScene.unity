@@ -5711,7 +5711,7 @@ GameObject:
   - component: {fileID: 830024183}
   - component: {fileID: 830024182}
   m_Layer: 5
-  m_Name: Test
+  m_Name: NextGlass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6061,7 +6061,6 @@ MonoBehaviour:
   estimator: {fileID: 1311438252}
   lineFrequency: {fileID: 50494097}
   textFrequency: {fileID: 1365137764}
-  newFrequency: 50
   estimateRate: 30
 --- !u!4 &1146985576
 Transform:
@@ -6759,7 +6758,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Test Button
+  m_text: Next Glass
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
