@@ -25,6 +25,7 @@ public class VoiceChallengeController : MonoBehaviour
     #endregion
 
     private float frequency = 1;
+    private Tween tween;
 
     // for testing purposes
     //public float newFrequency = 50;
@@ -78,16 +79,19 @@ public class VoiceChallengeController : MonoBehaviour
 
         // Make glass appear 
         // TODO prettier animation
+        
+        if(newGlass == null)
+        {
+            newGlass = Instantiate(prefabGlass, parentPanel);
+        }
 
-
-        newGlass = Instantiate(prefabGlass, parentPanel);
         newGlass.GetComponent<Image>().sprite = currentGlass.sprite;
 
         // Move the glass
         newGlass.transform.position = spawnPosition.position;
-        
+
         //newGlass.transform.DOMove(endPosition.position, movementDuration).SetEase(Ease.Linear).OnComplete(() => GlassEnd(newGlass)); // Go to end
-        newGlass.transform.DOMove(middlePosition.position, movementDuration / 5); // Go to middle
+        tween = newGlass.transform.DOMove(middlePosition.position, movementDuration / 5); // Go to middle
 
         // TODO end animation
 
@@ -102,7 +106,7 @@ public class VoiceChallengeController : MonoBehaviour
 
         var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, 0, 720);
         newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
-        // TODO BIG ONE: make pitch interact with glass
+
         // Y mil cosas mas que saldrán, pero eso pa luego
 
         newGlass.GetComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
@@ -110,7 +114,9 @@ public class VoiceChallengeController : MonoBehaviour
 
     public void GlassEnd()
     {
-        GameObject.Destroy(newGlass);
+        // We remove the current glass and feed the next one (if any)
+        //GameObject.Destroy(newGlass);
+        DOTween.Kill(tween);
         NextGlass();
     }
 
@@ -152,6 +158,7 @@ public class VoiceChallengeController : MonoBehaviour
                 score += 100; // 100 score per broken glass
                 GlassEnd();
             }
+
             textScore.text = "Score\r\n" + score;
         }
     }
