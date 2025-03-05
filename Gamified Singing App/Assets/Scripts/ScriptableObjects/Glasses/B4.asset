@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9eb1226ccf12b714d99e408b0894c49f, type: 3}
-  m_Name: ExGlass3
+  m_Name: B4
   m_EditorClassIdentifier: 
-  frequencyBreak: 150
-  maxToughness: 0.5
-  toughness: 0.5
+  frequencyBreak: 493.883
+  maxToughness: 3
+  toughness: -0.019997705
   sound: {fileID: 0}
   sprite: {fileID: 21300000, guid: e5b50378db746ea47a80159332edf056, type: 3}

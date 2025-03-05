@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0b9c7de6d320fb46b043689b4860a7d, type: 3}
-  m_Name: ExampleExercise
+  m_Name: CMaj Triads
   m_EditorClassIdentifier: 
-  exerciseName: Example Exercise
+  exerciseName: CMaj Triads
   glasses:
   - {fileID: 11400000, guid: bbfdc3ea6c580d940a1b5ab67d930371, type: 2}
+  - {fileID: 11400000, guid: 3bc374605c8c58c47b2514717a8df31d, type: 2}
+  - {fileID: 11400000, guid: bbfdc3ea6c580d940a1b5ab67d930371, type: 2}
+  - {fileID: 11400000, guid: 68d664d2649ae1c41a19a066314376a8, type: 2}
   - {fileID: 11400000, guid: 9311b9a0e9f59494998d9b843690e875, type: 2}
   - {fileID: 11400000, guid: 3bc374605c8c58c47b2514717a8df31d, type: 2}
-  - {fileID: 11400000, guid: 68d664d2649ae1c41a19a066314376a8, type: 2}
+  - {fileID: 11400000, guid: 313089898ef98db42af6664c08c1a73c, type: 2}
+  - {fileID: 11400000, guid: 3bc374605c8c58c47b2514717a8df31d, type: 2}
   index: 0
