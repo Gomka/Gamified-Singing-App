@@ -25,7 +25,6 @@ public class VoiceChallengeController : MonoBehaviour
     #endregion
 
     private float frequency = 1;
-    private Tween tween;
 
     // for testing purposes
     //public float newFrequency = 50;
@@ -91,7 +90,7 @@ public class VoiceChallengeController : MonoBehaviour
         newGlass.transform.position = spawnPosition.position;
 
         //newGlass.transform.DOMove(endPosition.position, movementDuration).SetEase(Ease.Linear).OnComplete(() => GlassEnd(newGlass)); // Go to end
-        tween = newGlass.transform.DOMove(middlePosition.position, movementDuration / 5); // Go to middle
+        newGlass.transform.DOMove(middlePosition.position, movementDuration / 5).SetTarget(newGlass); // Go to middle
 
         // TODO end animation
 
@@ -116,7 +115,9 @@ public class VoiceChallengeController : MonoBehaviour
     {
         // We remove the current glass and feed the next one (if any)
         //GameObject.Destroy(newGlass);
-        DOTween.Kill(tween);
+
+        DOTween.Kill(newGlass);
+
         NextGlass();
     }
 
