@@ -95,16 +95,11 @@ public class VoiceChallengeController : MonoBehaviour
         // TODO end animation
 
         // scale glass according to pitch, Ideally scaling should be minimal, and sprite should be sized according to pitch.
-
-        // 100
-        // Range - 50 - 1000
-        // Screen height 0 - 1080
-        // Freq edges (1/6 & 5/6) - 180 - 720
+        // UI is scaled to 1920x1080. 5/6 of 1080 is 720
+        var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, 0, 720); 
+        newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
 
         // TODO cull glasses that are outside of the player's vocal range
-
-        var freqToHeight = Map(currentGlass.frequencyBreak, estimator.frequencyMin, estimator.frequencyMax, 0, 720);
-        newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
 
         // Y mil cosas mas que saldrán, pero eso pa luego
 
@@ -114,10 +109,8 @@ public class VoiceChallengeController : MonoBehaviour
     public void GlassEnd()
     {
         // We remove the current glass and feed the next one (if any)
-        //GameObject.Destroy(newGlass);
 
         DOTween.Kill(newGlass);
-
         NextGlass();
     }
 
@@ -181,12 +174,13 @@ public class VoiceChallengeController : MonoBehaviour
             // indicate the frequency with LineRenderer
             var cam = Camera.main;
             var freqToHeight = Map(frequency, estimator.frequencyMin, estimator.frequencyMax, cam.scaledPixelHeight/6, cam.scaledPixelHeight-(cam.scaledPixelHeight/6));
-            var worldStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
-            var worldEnd = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane)); 
+            //var worldStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
+            var lineStart = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth/2, freqToHeight, cam.nearClipPlane));
+            var lineEnd = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane)); 
 
             lineFrequency.positionCount = 2;
-            lineFrequency.SetPosition(0, worldStart);
-            lineFrequency.SetPosition(1, worldEnd); // TODO Lerp/DOTween the positions for smoother line
+            lineFrequency.SetPosition(0, lineStart);
+            lineFrequency.SetPosition(1, lineEnd); // TODO Lerp/DOTween the positions for smoother line
 
             // Display frequency and name of note
             textFrequency.text = "Frequency:\r\n" + frequency + " HZ\r\n" + GetNameFromFrequency(frequency);
