@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9eb1226ccf12b714d99e408b0894c49f, type: 3}
-  m_Name: G4
+  m_Name: C4
   m_EditorClassIdentifier: 
-  frequencyBreak: 391.995
-  maxToughness: 3
-  toughness: 3
-  sound: {fileID: 0}
-  sprite: {fileID: 21300000, guid: d6f46f35d21979348972a02122edfc80, type: 3}
+  frequencyBreak: 261.626
+  maxToughness: 1
+  toughness: -0.019999612
+  sound: {fileID: 8300000, guid: ac749bfd0cb1ae24fad3458fb006fc70, type: 3}
+  sprite: {fileID: 21300000, guid: d634a87868aa5da4db1b4f28022d7f75, type: 3}

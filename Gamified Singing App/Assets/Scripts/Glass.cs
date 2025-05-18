@@ -8,6 +8,6 @@ public class Glass : ScriptableObject
     [Range(0.5f, 3)]
     public float maxToughness;
     public float toughness;
-    public AudioClip sound;
+    public AudioClip sound; // Morphine (percussion 12)
     public Sprite sprite;
 }

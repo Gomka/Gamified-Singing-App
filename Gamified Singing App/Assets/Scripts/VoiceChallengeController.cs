@@ -16,6 +16,8 @@ public class VoiceChallengeController : MonoBehaviour
     [SerializeField] RectTransform parentPanel;
     [SerializeField] TMP_Text textScore;
     [SerializeField] PlayerConfig playerConfig;
+    [SerializeField] AudioSource glassSource;
+    public AudioMixerGroup glassMixerGroup;
 
     #region Pitch Visualizer
     public AudioSource audioSource;
@@ -41,6 +43,7 @@ public class VoiceChallengeController : MonoBehaviour
 
         // call at slow intervals (Update() is generally too fast)
         InvokeRepeating(nameof(UpdateVisualizer), 0, 1.0f / estimateRate);
+        glassSource.outputAudioMixerGroup = glassMixerGroup;
     }
 
     public void FixedUpdate()
@@ -100,10 +103,17 @@ public class VoiceChallengeController : MonoBehaviour
         newGlass.GetComponent<RectTransform>().sizeDelta = new Vector2(freqToHeight, freqToHeight);
 
         // TODO cull glasses that are outside of the player's vocal range
-
         // Y mil cosas mas que saldrán, pero eso pa luego
 
+        newGlass.GetComponent<Button>().onClick.RemoveAllListeners();
         newGlass.GetComponent<Button>().onClick.AddListener(() => GlassClicked(currentGlass.sound));
+        GlassClicked(currentGlass.sound);
+    }
+
+    public void GlassClicked(AudioClip glassSound)
+    {
+        //Debug.Log("Ding!");
+        glassSource.PlayOneShot(glassSound);
     }
 
     public void GlassEnd()
@@ -112,12 +122,6 @@ public class VoiceChallengeController : MonoBehaviour
 
         DOTween.Kill(newGlass);
         NextGlass();
-    }
-
-    public void GlassClicked(AudioClip glassSound)
-    {
-        Debug.Log("Ding!");
-        //Play(glassSound);
     }
 
     public void ComputeGlassScore()
@@ -174,8 +178,8 @@ public class VoiceChallengeController : MonoBehaviour
             // indicate the frequency with LineRenderer
             var cam = Camera.main;
             var freqToHeight = Map(frequency, estimator.frequencyMin, estimator.frequencyMax, cam.scaledPixelHeight/6, cam.scaledPixelHeight-(cam.scaledPixelHeight/6));
-            //var worldStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
-            var lineStart = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth/2, freqToHeight, cam.nearClipPlane));
+            var lineStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
+            //var lineStart = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth/2, freqToHeight, cam.nearClipPlane));
             var lineEnd = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane)); 
 
             lineFrequency.positionCount = 2;
