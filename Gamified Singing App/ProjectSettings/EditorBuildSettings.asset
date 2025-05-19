@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PitchDetectionScene.unity
-    guid: ed851355fa6e82a49acfcbb2ac9d5665
+    path: Assets/Scenes/MainMenu.unity
+    guid: c9421aaa17acb0041a5d12f8ab411bd6
   - enabled: 1
     path: Assets/Scenes/SingingScene.unity
     guid: f1b9fbc6021c59743819e206c5efc60a
+  - enabled: 1
+    path: Assets/Scenes/PitchDetectionScene.unity
+    guid: ed851355fa6e82a49acfcbb2ac9d5665
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

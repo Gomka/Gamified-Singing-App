@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: B4
   m_EditorClassIdentifier: 
   frequencyBreak: 493.883
-  maxToughness: 3
-  toughness: 3
+  maxToughness: 1
+  toughness: -0.019997705
   sound: {fileID: 8300000, guid: c953a4158195ec14a868308834883932, type: 3}
   sprite: {fileID: 21300000, guid: e5b50378db746ea47a80159332edf056, type: 3}

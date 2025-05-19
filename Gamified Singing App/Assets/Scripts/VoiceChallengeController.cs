@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine.Audio;
 using UnityEngine.Timeline;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class VoiceChallengeController : MonoBehaviour
 {
@@ -59,8 +60,13 @@ public class VoiceChallengeController : MonoBehaviour
     public void LoadPlayerConfig()
     {
         // Load the user's frequency range and selected exercise
-        estimator.frequencyMin = (int) playerConfig.minSingingFreq;
-        estimator.frequencyMax = (int) playerConfig.maxSingingFreq;
+        //estimator.frequencyMin = (int) playerConfig.minSingingFreq;
+        //estimator.frequencyMax = (int) playerConfig.maxSingingFreq;
+
+        // Freq range from 200 to 600 for testing
+        estimator.frequencyMin = 200;
+        estimator.frequencyMax = 600;
+
         exercise = playerConfig.selectedExercise;
         exercise.Reset();
     }
@@ -73,7 +79,7 @@ public class VoiceChallengeController : MonoBehaviour
         if (currentGlass == null)  // AND all present glasses are won
         {
             Debug.Log("End");
-            // WIN ~ SceneManager.LoadScene(0);
+            SceneManager.LoadScene(0);
             return;
         }
 
@@ -184,7 +190,7 @@ public class VoiceChallengeController : MonoBehaviour
 
             lineFrequency.positionCount = 2;
             lineFrequency.SetPosition(0, lineStart);
-            lineFrequency.SetPosition(1, lineEnd); // TODO Lerp/DOTween the positions for smoother line
+            lineFrequency.SetPosition(1, lineEnd); 
 
             // Display frequency and name of note
             textFrequency.text = "Frequency:\r\n" + frequency + " HZ\r\n" + GetNameFromFrequency(frequency);
