@@ -25,6 +25,8 @@ public class VoiceChallengeController : MonoBehaviour
     public AudioPitchEstimator estimator;
     public LineRenderer lineFrequency;
     public TMP_Text textFrequency;
+    public SpriteRenderer avatarRenderer;
+    public Sprite neutralSprite, highSprite, mediumSprite, lowSprite;
     #endregion
 
     private float frequency = 1;
@@ -176,6 +178,7 @@ public class VoiceChallengeController : MonoBehaviour
         {
             // hide the line when it does not exist
             lineFrequency.positionCount = 0;
+            avatarRenderer.sprite = neutralSprite;
         }
         else
         {
@@ -184,16 +187,30 @@ public class VoiceChallengeController : MonoBehaviour
             // indicate the frequency with LineRenderer
             var cam = Camera.main;
             var freqToHeight = Map(frequency, estimator.frequencyMin, estimator.frequencyMax, cam.scaledPixelHeight/6, cam.scaledPixelHeight-(cam.scaledPixelHeight/6));
-            var lineStart = cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane));
-            //var lineStart = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth/2, freqToHeight, cam.nearClipPlane));
-            var lineEnd = cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane)); 
 
-            lineFrequency.positionCount = 2;
-            lineFrequency.SetPosition(0, lineStart);
-            lineFrequency.SetPosition(1, lineEnd); 
+            lineFrequency.positionCount = 3;
+            lineFrequency.SetPosition(0, cam.ScreenToWorldPoint(new Vector3(0, freqToHeight, cam.nearClipPlane))); // Starting the line at the left side
+            lineFrequency.SetPosition(1, cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth / 2, freqToHeight, cam.nearClipPlane))); // Middle of the screen
+            lineFrequency.SetPosition(2, cam.ScreenToWorldPoint(new Vector3(cam.scaledPixelWidth, freqToHeight, cam.nearClipPlane))); // Ending the line at the right side
 
             // Display frequency and name of note
             textFrequency.text = "Frequency:\r\n" + frequency + " HZ\r\n" + GetNameFromFrequency(frequency);
+
+            Debug.Log(freqToHeight / cam.scaledPixelHeight);
+
+            // Assign different faces in top 3rd, middle 3rd and bottom 3rd
+            switch (freqToHeight / cam.scaledPixelHeight)
+            {
+                case > 0.66f:
+                    avatarRenderer.sprite = highSprite;
+                    break;
+                case > 0.33f:
+                    avatarRenderer.sprite = mediumSprite;
+                    break;
+                default:
+                    avatarRenderer.sprite = lowSprite;
+                    break;
+            }
         }
     }
 
