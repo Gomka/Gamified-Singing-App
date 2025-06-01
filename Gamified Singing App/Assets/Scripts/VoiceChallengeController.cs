@@ -52,7 +52,6 @@ public class VoiceChallengeController : MonoBehaviour
     public void FixedUpdate()
     {
         // Compute score & glass dmg as long as there's a glass + the user is singing
-
         if(currentGlass != null && lineFrequency.positionCount > 0)
         {
             ComputeGlassScore();
@@ -120,14 +119,13 @@ public class VoiceChallengeController : MonoBehaviour
 
     public void GlassClicked(AudioClip glassSound)
     {
-        //Debug.Log("Ding!");
+        // Ding!
         glassSource.PlayOneShot(glassSound);
     }
 
     public void GlassEnd()
     {
         // We remove the current glass and feed the next one (if any)
-
         DOTween.Kill(newGlass);
         NextGlass();
     }
