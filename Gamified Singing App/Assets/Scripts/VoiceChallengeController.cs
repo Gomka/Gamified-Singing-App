@@ -84,8 +84,6 @@ public class VoiceChallengeController : MonoBehaviour
             return;
         }
 
-        Debug.Log(currentGlass.frequencyBreak);
-
         // Make glass appear 
         // TODO prettier animation
         
@@ -94,6 +92,7 @@ public class VoiceChallengeController : MonoBehaviour
             newGlass = Instantiate(prefabGlass, parentPanel);
         }
 
+        currentGlass.toughness = currentGlass.maxToughness;
         newGlass.GetComponent<Image>().sprite = currentGlass.sprite;
 
         // Move the glass

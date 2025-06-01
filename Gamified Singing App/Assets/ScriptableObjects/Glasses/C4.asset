@@ -16,4 +16,4 @@ MonoBehaviour:
   maxToughness: 1
   toughness: -0.019999612
   sound: {fileID: 8300000, guid: ac749bfd0cb1ae24fad3458fb006fc70, type: 3}
-  sprite: {fileID: 21300000, guid: d634a87868aa5da4db1b4f28022d7f75, type: 3}
+  sprite: {fileID: 5093988930707144513, guid: 4e609ae188302dd40a8cd363230b0f8e, type: 3}

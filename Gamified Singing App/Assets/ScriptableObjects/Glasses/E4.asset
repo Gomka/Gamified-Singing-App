@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frequencyBreak: 329.628
   maxToughness: 1
-  toughness: -0.00000008940697
+  toughness: -0.019999612
   sound: {fileID: 8300000, guid: 5922bce5cd0d8874eaebfc83419efa83, type: 3}
-  sprite: {fileID: 21300000, guid: e5b50378db746ea47a80159332edf056, type: 3}
+  sprite: {fileID: -2873208158984133161, guid: 48c7ceec87a71a74090155073792eb01, type: 3}
