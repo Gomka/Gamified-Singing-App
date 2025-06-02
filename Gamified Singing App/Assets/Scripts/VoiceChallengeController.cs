@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.Timeline;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class VoiceChallengeController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class VoiceChallengeController : MonoBehaviour
     private GameObject newGlass;
     public float movementDuration = 20.0f, score = 0;
     [SerializeField] GameObject prefabGlass;
+    private ParticleSystem scoreParticles;
     [SerializeField] RectTransform parentPanel;
     [SerializeField] TMP_Text textScore;
     [SerializeField] PlayerConfig playerConfig;
@@ -47,6 +49,7 @@ public class VoiceChallengeController : MonoBehaviour
         // call at slow intervals (Update() is generally too fast)
         InvokeRepeating(nameof(UpdateVisualizer), 0, 1.0f / estimateRate);
         glassSource.outputAudioMixerGroup = glassMixerGroup;
+        //scoreParticles = prefabGlass.GetComponentInChildren<ParticleSystem>();
     }
 
     public void FixedUpdate()
@@ -94,6 +97,7 @@ public class VoiceChallengeController : MonoBehaviour
 
         currentGlass.toughness = currentGlass.maxToughness;
         newGlass.GetComponent<Image>().sprite = currentGlass.sprite;
+        scoreParticles = newGlass.gameObject.GetComponentInChildren<ParticleSystem>();
 
         // Move the glass
         newGlass.transform.position = spawnPosition.position;
@@ -131,30 +135,36 @@ public class VoiceChallengeController : MonoBehaviour
 
     public void ComputeGlassScore()
     {
+
+        float maxDistance = 15f;
+        float maxScore = 4f;
+
         float voicePrecision = Mathf.Abs(currentGlass.frequencyBreak - frequency);
 
-        // 1hz range = perfect score
-        // 5hz range = medium score
-        // 15hz range = min score
-        // 30hz range = no score
-
-        if (voicePrecision < 30)
+        if (voicePrecision < maxDistance)
         {
-            currentGlass.toughness -= 0.02f;
-            score += 1;
+            // Linearly interpolate score: 0 at 15Hz, 1 at 0Hz
+            float normalized = 1f - (voicePrecision / maxDistance);
+            float scoreToAdd = normalized * maxScore;
 
-            if(voicePrecision < 15)
+            currentGlass.toughness -= 0.02f;
+            score += Mathf.Round(scoreToAdd);
+
+            // Interpolate color:
+            if (normalized < 0.66f)
             {
-                score += 2;
-                if(voicePrecision < 5)
-                {
-                    score += 3;
-                    if(voicePrecision <1)
-                    {
-                        score += 4;
-                    }
-                }
+                // From red to yellow
+                float t = normalized / 0.66f; // Normalize to 0–1 in this range
+                scoreParticles.startColor = Color.Lerp(Color.red, Color.yellow, t);
             }
+            else
+            {
+                // From yellow to green
+                float t = (normalized - 0.66f) / (1f - 0.66f); // Normalize to 0–1 in this range
+                scoreParticles.startColor = Color.Lerp(Color.yellow, Color.green, t);
+            }
+
+            scoreParticles.Play();
 
             if (currentGlass.toughness <= 0)
             {
@@ -192,8 +202,6 @@ public class VoiceChallengeController : MonoBehaviour
 
             // Display frequency and name of note
             textFrequency.text = "Frequency:\r\n" + frequency + " HZ\r\n" + GetNameFromFrequency(frequency);
-
-            Debug.Log(freqToHeight / cam.scaledPixelHeight);
 
             // Assign different faces in top 3rd, middle 3rd and bottom 3rd
             switch (freqToHeight / cam.scaledPixelHeight)
