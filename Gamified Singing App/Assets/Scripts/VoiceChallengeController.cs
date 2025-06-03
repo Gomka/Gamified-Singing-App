@@ -49,7 +49,6 @@ public class VoiceChallengeController : MonoBehaviour
         // call at slow intervals (Update() is generally too fast)
         InvokeRepeating(nameof(UpdateVisualizer), 0, 1.0f / estimateRate);
         glassSource.outputAudioMixerGroup = glassMixerGroup;
-        //scoreParticles = prefabGlass.GetComponentInChildren<ParticleSystem>();
     }
 
     public void FixedUpdate()
