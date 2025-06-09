@@ -63,12 +63,8 @@ public class VoiceChallengeController : MonoBehaviour
     public void LoadPlayerConfig()
     {
         // Load the user's frequency range and selected exercise
-        //estimator.frequencyMin = (int) playerConfig.minSingingFreq;
-        //estimator.frequencyMax = (int) playerConfig.maxSingingFreq;
-
-        // Freq range from 200 to 600 for testing
-        estimator.frequencyMin = 200;
-        estimator.frequencyMax = 600;
+        estimator.frequencyMin = (int) playerConfig.minSingingFreq;
+        estimator.frequencyMax = (int) playerConfig.maxSingingFreq;
 
         exercise = playerConfig.selectedExercise;
         exercise.Reset();
@@ -81,8 +77,20 @@ public class VoiceChallengeController : MonoBehaviour
         // If no more Glasses, win!
         if (currentGlass == null)  // AND all present glasses are won
         {
+            if(score > playerConfig.maxScore)
+            {
+                playerConfig.maxScore = score; // highscore achieved
+            }
+
             Debug.Log("End");
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(3); // goto highscore scene
+            return;
+        }
+
+        // IF the glass frequency is outside of the user's vocal range, it's skipped
+        if(currentGlass.frequencyBreak > playerConfig.maxSingingFreq || currentGlass.frequencyBreak < playerConfig.minSingingFreq)
+        {
+            NextGlass();
             return;
         }
 

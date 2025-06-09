@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequencyMin: 50
-  frequencyMax: 1000
+  frequencyMax: 800
   harmonicsToUse: 5
   smoothingWidth: 450
   thresholdSRH: 7

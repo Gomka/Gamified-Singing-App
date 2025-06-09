@@ -13,7 +13,7 @@ public class FreqToLineMovement: MonoBehaviour
 
     private void Update()
     {
-        if (line.positionCount == 0)
+        if (line.positionCount < 3)
         {
             //text.fontSize = 0;
         } else

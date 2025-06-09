@@ -5,12 +5,10 @@ public class PlayerConfig : ScriptableObject
 {
     public float minSingingFreq = 150, maxSingingFreq = 600;
     public Exercise selectedExercise;
-    public int selectedCosmetic;
+    public float maxScore = 0;
 
-    public enum Cosmetics
+    public void ResetUserScore()
     {
-        Cosmetic1,
-        Cosmetic2,
-        Cosmetic3,
+        maxScore = 0;
     }
 }

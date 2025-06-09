@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708d1ecd30cc22043bec863446d897ea, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  minSingingFreq: 50
+  minSingingFreq: 150
   maxSingingFreq: 600
-  selectedExercise: {fileID: 11400000, guid: 03839eaf58772044dbf6751d327e7f40, type: 2}
-  selectedCosmetic: 0
+  selectedExercise: {fileID: 11400000, guid: 58e00fa87912f6e4bb8e91cdf9789aea, type: 2}
+  maxScore: 0
