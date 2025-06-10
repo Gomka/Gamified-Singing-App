@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      glass4_outline_0: -5265097077773187643
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
