@@ -25,4 +25,16 @@ public class Exercise : ScriptableObject
             glass.toughness = glass.maxToughness;
         }
     }
+
+    public void RandomizeOrder()
+    {
+        int n = glasses.Length-1;
+        while (n > 1)
+        {
+            int k = Random.Range(0, n--);
+            Glass temp = glasses[n];
+            glasses[n] = glasses[k];
+            glasses[k] = temp;
+        }
+    }
 }

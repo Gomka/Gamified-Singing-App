@@ -8,6 +8,7 @@ public class ScoreDisplay: MonoBehaviour
     [SerializeField] TMP_Text scoreText;
     private void Start()
     {
-        scoreText.text = "HighScore\r\n" + playerConfig.maxScore;
+        scoreText.text = "Exercise HighScore\r\n" + playerConfig.maxScore + "\n\nArcade HighScore\r\n" + playerConfig.maxTimedScore;
+
     }
 }

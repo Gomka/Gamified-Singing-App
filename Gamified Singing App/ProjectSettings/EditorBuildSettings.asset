@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HighScore.unity
     guid: 3e4dd1a6fe0f3e241adefb3f90b71338
+  - enabled: 1
+    path: Assets/Scenes/ArcadeSingingScene.unity
+    guid: 7b44b1147c8750d4dbb19414f5296ebe
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

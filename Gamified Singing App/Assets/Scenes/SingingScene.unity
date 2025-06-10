@@ -1463,7 +1463,7 @@ MonoBehaviour:
   frequencyMin: 100
   frequencyMax: 600
   harmonicsToUse: 5
-  smoothingWidth: 500
+  smoothingWidth: 450
   thresholdSRH: 8
 --- !u!82 &1311438253
 AudioSource:

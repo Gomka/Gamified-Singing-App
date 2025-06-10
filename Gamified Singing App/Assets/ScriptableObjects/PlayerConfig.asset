@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSingingFreq: 150
   maxSingingFreq: 600
-  selectedExercise: {fileID: 11400000, guid: 58e00fa87912f6e4bb8e91cdf9789aea, type: 2}
+  selectedExercise: {fileID: 11400000, guid: bc8412e130bcd0a40bb4746878c59bb4, type: 2}
   maxScore: 0
+  maxTimedScore: 0

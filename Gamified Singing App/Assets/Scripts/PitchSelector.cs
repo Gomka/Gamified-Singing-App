@@ -41,10 +41,10 @@ public class PitchSelector : MonoBehaviour
 
     public void Reset()
     {
-        minFreq = 150;
+        minFreq = 200;
         playerConfig.minSingingFreq = minFreq;
         textMinFreq.text = "Min Freq.\r\n" + minFreq + "HZ";
-        maxFreq = 600;
+        maxFreq = 400;
         playerConfig.maxSingingFreq = maxFreq;
         textMaxFreq.text = "Max Freq.\r\n" + maxFreq + "HZ";
     }
